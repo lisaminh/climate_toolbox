@@ -2,10 +2,12 @@ clear
 clc
 
 % Root directory for E3SM output
-root='/pscratch/sd/w/wagmanbe/E3SM_simulations/CLDERA/v2.LR.WCYCL20TR.pmcpu.limvar.ens1/archive/atm/hist/';
+root='/pscratch/sd/l/lmnguyen/TEM_data/'
+
+%root='/pscratch/sd/w/wagmanbe/E3SM_simulations/CLDERA/v2.LR.WCYCL20TR.pmcpu.limvar.ens1/archive/atm/hist/';
 %root='C:/Users/lisa/Downloads/variability-master-p1_lim_v_full-MATLAB/variability-master-p1_lim_v_full-MATLAB/p1_lim_v_full/MATLAB/';
 % Name of first E3SM output file
-first_file='v2.LR.WCYCL20TR.pmcpu.limvar.ens1.eam.h1.1991-06-01-00000.nc';
+first_file='v2.LR.WCYCL20TR.pmcpu.limvar.ens1.eam.h1.1998-11-23_TEM_VARIABLES.nc'
 
 % Number of complete years simulated
 years=1;
@@ -31,7 +33,7 @@ file_check = strcat(Use_files,'/ZM.nc');
 if exist(file_check,'file')==0
     lat = read_E3SM_QOI(file_base,'1',Dates(1,:),'lat');
     lat_ZM = (-89.5:.5:89.5)';
-    L = 180;
+    L = 150;
     
     [ZM, ZM_nat] = Sph_Zonal_Mean(lat,lat_ZM,L);
 
@@ -55,7 +57,7 @@ end
 Dates_full=Dates;
 %Dates=Dates_full(1:3,:);
 disp('Calculating TEM variables')
-[Flat,Fp,V_TEM, OMEGA_TEM, W_TEM, lat,lev, time] = E3SM_TEM(ZM,ZM_nat,lat_ZM,lat,Dates,file_base,years,output_dir);
+[PSI, divF, Flat,Fp,V_TEM, OMEGA_TEM, W_TEM, lat,lev, time] = E3SM_TEM(ZM,ZM_nat,lat_ZM,lat,Dates,file_base,years,output_dir);
 
 
 %file_out = strcat(output_dir,'/TEMv4_vars.nc');
